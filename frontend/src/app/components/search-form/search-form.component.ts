@@ -56,4 +56,12 @@ export class SearchFormComponent implements OnInit {
       passengers: this.passengers,
     });
   }
+
+  decPassengers(): void {
+    if (this.passengers > 1) this.passengers--;
+  }
+
+  incPassengers(): void {
+    if (this.passengers < 10) this.passengers++;
+  }
 }

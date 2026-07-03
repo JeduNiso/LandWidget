@@ -7,9 +7,43 @@
   padding: 16px;
 }
 
-/* Stepper */
-.stepper {
+/* ── MOBILE STEPPER (shown < 640px) ──────────────────── */
+.stepper-mobile {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+.stepper-mobile__bar {
+  height: 4px;
+  background: #eee;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.stepper-mobile__fill {
+  height: 100%;
+  background: #e63946;
+  border-radius: 2px;
+  transition: width 0.35s ease;
+}
+.stepper-mobile__label {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.stepper-mobile__step-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #e63946;
+}
+.stepper-mobile__counter {
+  font-size: 0.78rem;
+  color: #aaa;
+}
+
+/* ── DESKTOP STEPPER (shown >= 640px) ───────────────── */
+.stepper {
+  display: none; /* hidden on mobile */
   align-items: center;
   justify-content: center;
   gap: 0;
@@ -77,6 +111,12 @@
   }
 }
 
+/* Show desktop stepper at 640px+ */
+@media (min-width: 640px) {
+  .stepper-mobile { display: none; }
+  .stepper { display: flex; }
+}
+
 .step-content {
   animation: fadeIn 0.22s ease-out;
 }
@@ -92,7 +132,10 @@
   font-size: 0.85rem;
   cursor: pointer;
   margin-bottom: 14px;
-  padding: 0;
+  padding: 8px 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 
   &:hover { color: #e63946; }
 }
@@ -106,3 +149,4 @@
   color: #dc2626;
   font-size: 0.9rem;
 }
+

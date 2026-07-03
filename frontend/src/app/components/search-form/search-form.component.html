@@ -33,16 +33,32 @@
       />
     </div>
 
-    <!-- Passengers -->
+    <!-- Passengers — numeric keyboard, 44px+ touch target -->
     <div class="field">
       <label for="passengers">Pasajeros</label>
-      <select id="passengers" [(ngModel)]="passengers" name="passengers">
-        <option *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]" [ngValue]="n">{{ n }}</option>
-      </select>
+      <div class="passengers-control">
+        <button type="button" class="passengers-btn"
+                (click)="decPassengers()"
+                [disabled]="passengers <= 1"
+                aria-label="Reducir pasajeros">−</button>
+        <input id="passengers"
+               type="number"
+               inputmode="numeric"
+               [(ngModel)]="passengers"
+               name="passengers"
+               min="1" max="10"
+               class="passengers-input"
+               aria-label="Número de pasajeros"
+               readonly>
+        <button type="button" class="passengers-btn"
+                (click)="incPassengers()"
+                [disabled]="passengers >= 10"
+                aria-label="Aumentar pasajeros">+</button>
+      </div>
     </div>
 
     <button type="submit" class="btn-search" [disabled]="!originId || !destinationId || !departureDate">
-      Buscar salidas
+      🔍 Buscar salidas
     </button>
   </form>
 </div>

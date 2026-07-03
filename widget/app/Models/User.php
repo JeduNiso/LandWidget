@@ -20,6 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'profile_photo',
         'password',
     ];
 
@@ -41,4 +43,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Return the public URL for the profile photo.
+     */
+    public function getProfilePhotoUrlAttribute(): ?string
+    {
+        if (! $this->profile_photo) {
+            return null;
+        }
+
+        return url('storage/' . $this->profile_photo);
+    }
+
+    protected $appends = ['profile_photo_url'];
 }

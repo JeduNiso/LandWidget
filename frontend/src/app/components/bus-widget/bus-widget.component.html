@@ -1,16 +1,34 @@
 <div class="widget-shell">
-  <!-- Step indicator -->
-  <div class="stepper" *ngIf="step !== 'confirmation'">
-    <div
-      class="stepper__step"
-      *ngFor="let s of steps; let i = index"
-      [class.active]="i === stepIndex"
-      [class.done]="i < stepIndex"
-    >
-      <div class="stepper__dot">{{ i < stepIndex ? '✓' : i + 1 }}</div>
-      <span class="stepper__label">{{ s.label }}</span>
+  <!-- Stepper (hidden on confirmation) -->
+  @if (step !== 'confirmation') {
+    <!-- Mobile: compact progress bar -->
+    <div class="stepper-mobile" [attr.aria-label]="'Paso ' + (stepIndex + 1) + ' de ' + steps.length">
+      <div class="stepper-mobile__bar">
+        <div class="stepper-mobile__fill"
+             [style.width.%]="((stepIndex + 1) / steps.length) * 100">
+        </div>
+      </div>
+      <div class="stepper-mobile__label">
+        <span class="stepper-mobile__step-name">{{ steps[stepIndex].label }}</span>
+        <span class="stepper-mobile__counter">Paso {{ stepIndex + 1 }} de {{ steps.length }}</span>
+      </div>
     </div>
-  </div>
+
+    <!-- Desktop: full step dots -->
+    <div class="stepper" role="list" aria-label="Pasos del proceso">
+      <div
+        class="stepper__step"
+        *ngFor="let s of steps; let i = index"
+        [class.active]="i === stepIndex"
+        [class.done]="i < stepIndex"
+        role="listitem"
+        [attr.aria-current]="i === stepIndex ? 'step' : null"
+      >
+        <div class="stepper__dot">{{ i < stepIndex ? '✓' : i + 1 }}</div>
+        <span class="stepper__label">{{ s.label }}</span>
+      </div>
+    </div>
+  }
 
   <!-- Step: Search -->
   <div *ngIf="step === 'search'">
