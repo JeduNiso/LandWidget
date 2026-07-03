@@ -31,8 +31,9 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call([
-            BusSeeder::class,     // ciudades, rutas, horarios, asientos
-            BookingSeeder::class, // reservas y pasajeros simulados
+            BusSeeder::class,      // ciudades, rutas, horarios, asientos
+            BookingSeeder::class,  // reservas y pasajeros simulados
+            SeguenceSeeder::class, // valor inicial de seguence para pagos
         ]);
     }
 }
