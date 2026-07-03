@@ -375,7 +375,7 @@ class PaymentController extends Controller
             . '<p>Gracias por su compra. Conserve este comprobante como respaldo de su transacción.</p>'
             . '<button class="print-btn" onclick="window.print()">Imprimir Comprobante</button>'
             . '&nbsp;'
-            . '<a class="print-btn" href="http://localhost:4200" style="background:#555;">Volver al Inicio</a>'
+            . '<a class="print-btn" href="' . e(env('FRONTEND_URL', 'http://localhost:4200')) . '" style="background:#555;">Volver al Inicio</a>'
             . '</div>'
             . '</div>'
             . '</body></html>';
