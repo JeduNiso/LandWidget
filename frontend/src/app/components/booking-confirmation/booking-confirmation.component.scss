@@ -1,0 +1,142 @@
+:host { display: block; }
+
+.confirmation {
+  text-align: center;
+  padding: 8px 4px;
+}
+
+.check-icon {
+  width: 64px;
+  height: 64px;
+  background: #22c55e;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 24px;
+}
+
+.booking-code {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f8f9ff;
+  border: 2px dashed #c7d0e8;
+  border-radius: 10px;
+  padding: 14px 28px;
+  margin-bottom: 24px;
+}
+.code-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #999;
+  margin-bottom: 4px;
+}
+.code {
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #1a1a2e;
+}
+
+.detail-card {
+  border: 1.5px solid #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  text-align: left;
+}
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 18px;
+  align-items: center;
+  gap: 8px;
+
+  &:not(:last-child) { border-bottom: 1px solid #f3f3f3; }
+}
+.detail-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #aaa;
+}
+.detail-value {
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 500;
+  text-align: right;
+
+  &.price { color: #e63946; font-weight: 800; font-size: 1.05rem; }
+}
+
+.passengers-section {
+  text-align: left;
+  margin-bottom: 24px;
+
+  h4 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #aaa;
+    margin-bottom: 10px;
+  }
+}
+.passenger-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.passenger-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  strong { font-size: 0.95rem; color: #1a1a2e; }
+  span   { font-size: 0.78rem; color: #999; }
+}
+.seat-badge {
+  background: #e63946;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.btn-new-search {
+  padding: 12px 28px;
+  background: #1a1a2e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover { background: #2d2d4e; }
+}

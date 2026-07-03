@@ -1,0 +1,48 @@
+<div class="search-form">
+  <h2 class="search-form__title">Compra tu pasaje de bus</h2>
+
+  <form (ngSubmit)="onSubmit()" #f="ngForm" class="search-form__grid">
+    <!-- Origin -->
+    <div class="field">
+      <label for="origin">Origen</label>
+      <select id="origin" [(ngModel)]="originId" name="origin" required>
+        <option [ngValue]="null" disabled>Selecciona ciudad</option>
+        <option *ngFor="let c of originCities" [ngValue]="c.id">{{ c.name }}</option>
+      </select>
+    </div>
+
+    <!-- Destination -->
+    <div class="field">
+      <label for="destination">Destino</label>
+      <select id="destination" [(ngModel)]="destinationId" name="destination" required>
+        <option [ngValue]="null" disabled>Selecciona ciudad</option>
+        <option *ngFor="let c of destinationCities" [ngValue]="c.id">{{ c.name }}</option>
+      </select>
+    </div>
+
+    <!-- Date -->
+    <div class="field">
+      <label for="date">Fecha de viaje</label>
+      <input
+        id="date"
+        type="date"
+        [(ngModel)]="departureDate"
+        name="date"
+        [min]="minDate"
+        required
+      />
+    </div>
+
+    <!-- Passengers -->
+    <div class="field">
+      <label for="passengers">Pasajeros</label>
+      <select id="passengers" [(ngModel)]="passengers" name="passengers">
+        <option *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]" [ngValue]="n">{{ n }}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-search" [disabled]="!originId || !destinationId || !departureDate">
+      Buscar salidas
+    </button>
+  </form>
+</div>

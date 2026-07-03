@@ -1,0 +1,33 @@
+<div class="schedule-list">
+  <div *ngIf="loading" class="state-msg">
+    <span class="spinner"></span> Buscando salidas...
+  </div>
+
+  <div *ngIf="!loading && searched && schedules.length === 0" class="state-msg empty">
+    No hay salidas disponibles para esa ruta y fecha.
+  </div>
+
+  <div *ngIf="!loading && schedules.length > 0" class="results-header">
+    {{ schedules.length }} salida{{ schedules.length !== 1 ? 's' : '' }} encontrada{{ schedules.length !== 1 ? 's' : '' }}
+  </div>
+
+  <div class="card" *ngFor="let s of schedules" (click)="select.emit(s)">
+    <div class="card__route">
+      <span class="time">{{ formatTime(s.departure_at) }}</span>
+      <span class="arrow">→</span>
+      <span class="time">{{ formatTime(s.arrival_at) }}</span>
+      <span class="duration">{{ formatDuration(s.duration_minutes) }}</span>
+    </div>
+
+    <div class="card__info">
+      <span class="bus-name">{{ s.bus_name }}</span>
+      <span class="badge" [class]="'badge--' + s.bus_type">{{ busTypeLabel(s.bus_type) }}</span>
+      <span class="seats">{{ s.available_seats }} asientos disp.</span>
+    </div>
+
+    <div class="card__price">
+      <span class="price">Bs. {{ s.price | number:'1.2-2' }}</span>
+      <button class="btn-select">Seleccionar</button>
+    </div>
+  </div>
+</div>

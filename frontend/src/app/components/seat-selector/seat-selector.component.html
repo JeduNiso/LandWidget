@@ -1,0 +1,71 @@
+<div class="seat-selector">
+  <div class="selector-header">
+    <button class="btn-back" (click)="back.emit()">← Volver</button>
+    <h3>Selecciona {{ passengersCount }} asiento{{ passengersCount > 1 ? 's' : '' }}</h3>
+  </div>
+
+  <!-- Trip summary -->
+  <div class="trip-summary">
+    <span><strong>{{ schedule.origin_city }}</strong> → <strong>{{ schedule.destination_city }}</strong></span>
+    <span class="trip-info">{{ schedule.bus_name }} · Bs. {{ schedule.price | number:'1.2-2' }} c/u</span>
+  </div>
+
+  <div *ngIf="loading" class="state-msg">
+    <span class="spinner"></span> Cargando plano del bus...
+  </div>
+
+  <ng-container *ngIf="!loading && seatsData">
+    <!-- Legend -->
+    <div class="legend">
+      <span class="legend-item"><span class="seat seat--free seat--sm"></span> Libre</span>
+      <span class="legend-item"><span class="seat seat--selected seat--sm"></span> Seleccionado</span>
+      <span class="legend-item"><span class="seat seat--reserved seat--sm"></span> Ocupado</span>
+    </div>
+
+    <!-- Bus front indicator -->
+    <div class="bus-front">
+      <div class="steering">🚌 Conductor</div>
+    </div>
+
+    <!-- Upper deck -->
+    <div *ngIf="upperDeckSeats.length > 0" class="deck">
+      <div class="deck-label">Piso Superior</div>
+      <div class="seat-grid">
+        <ng-container *ngFor="let seat of upperDeckSeats">
+          <div [ngClass]="seatClass(seat)" (click)="toggleSeat(seat)" [title]="seat.seat_number">
+            {{ seat.seat_number }}
+          </div>
+          <div *ngIf="seat.seat_number.slice(-1) === '2' || seat.seat_number.slice(-1) === 'B'" class="aisle"></div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Lower deck -->
+    <div class="deck">
+      <div class="deck-label">{{ upperDeckSeats.length > 0 ? 'Piso Inferior' : 'Asientos' }}</div>
+      <div class="seat-grid">
+        <ng-container *ngFor="let seat of lowerDeckSeats; let i = index">
+          <div [ngClass]="seatClass(seat)" (click)="toggleSeat(seat)" [title]="seat.seat_number">
+            {{ seat.seat_number }}
+          </div>
+          <div *ngIf="(i + 1) % 2 === 0 && (i + 1) % 4 !== 0" class="aisle"></div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="selection-status">
+      {{ selectedSeats.length }} / {{ passengersCount }} asiento{{ passengersCount > 1 ? 's' : '' }} seleccionado{{ selectedSeats.length !== 1 ? 's' : '' }}
+      <span *ngIf="selectedSeats.length > 0" class="selected-numbers">
+        ({{ selectedSeatNumbers }})
+      </span>
+    </div>
+
+    <button
+      class="btn-continue"
+      [disabled]="selectedSeats.length !== passengersCount"
+      (click)="onContinue()"
+    >
+      Continuar con datos del pasajero
+    </button>
+  </ng-container>
+</div>

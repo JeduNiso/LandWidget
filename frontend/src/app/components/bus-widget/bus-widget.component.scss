@@ -1,0 +1,108 @@
+:host { display: block; }
+
+.widget-shell {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Stepper */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+
+  &__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    position: relative;
+
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 13px;
+      left: 60%;
+      width: 80%;
+      height: 2px;
+      background: #eee;
+      z-index: 0;
+    }
+
+    &.done::after  { background: #e63946; }
+    &.active::after { background: #eee; }
+  }
+
+  &__dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #eee;
+    color: #bbb;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    position: relative;
+    transition: background 0.2s, color 0.2s;
+
+    .active > & {
+      background: #e63946;
+      color: #fff;
+    }
+
+    .done > & {
+      background: #e63946;
+      color: #fff;
+    }
+  }
+
+  &__label {
+    font-size: 0.65rem;
+    color: #bbb;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+
+    .active & { color: #e63946; font-weight: 700; }
+    .done &   { color: #e63946; }
+  }
+}
+
+.step-content {
+  animation: fadeIn 0.22s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.btn-back-top {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-bottom: 14px;
+  padding: 0;
+
+  &:hover { color: #e63946; }
+}
+
+.error-msg {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: #fff2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 0.9rem;
+}

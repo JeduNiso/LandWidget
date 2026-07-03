@@ -1,0 +1,80 @@
+:host {
+  display: block;
+}
+
+.search-form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  select,
+  input[type='date'] {
+    padding: 10px 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #fafafa;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #e63946;
+    }
+  }
+}
+
+.btn-search {
+  grid-column: 1 / -1;
+  padding: 13px;
+  background: #e63946;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 4px;
+
+  &:hover:not(:disabled) {
+    background: #c62836;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

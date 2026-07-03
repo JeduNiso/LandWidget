@@ -1,0 +1,70 @@
+<div class="widget-shell">
+  <!-- Step indicator -->
+  <div class="stepper" *ngIf="step !== 'confirmation'">
+    <div
+      class="stepper__step"
+      *ngFor="let s of steps; let i = index"
+      [class.active]="i === stepIndex"
+      [class.done]="i < stepIndex"
+    >
+      <div class="stepper__dot">{{ i < stepIndex ? '✓' : i + 1 }}</div>
+      <span class="stepper__label">{{ s.label }}</span>
+    </div>
+  </div>
+
+  <!-- Step: Search -->
+  <div *ngIf="step === 'search'">
+    <app-search-form (search)="onSearch($event)"></app-search-form>
+  </div>
+
+  <!-- Step: Schedules -->
+  <div *ngIf="step === 'schedules'" class="step-content">
+    <button class="btn-back-top" (click)="step = 'search'">← Modificar búsqueda</button>
+    <app-schedule-list
+      [schedules]="schedules"
+      [loading]="schedulesLoading"
+      [searched]="schedulesSearched"
+      (select)="onScheduleSelect($event)"
+    ></app-schedule-list>
+  </div>
+
+  <!-- Step: Seats -->
+  <div *ngIf="step === 'seats' && selectedSchedule" class="step-content">
+    <app-seat-selector
+      [schedule]="selectedSchedule"
+      [passengersCount]="passengersCount"
+      (seatsChosen)="onSeatsChosen($event)"
+      (back)="step = 'schedules'"
+    ></app-seat-selector>
+  </div>
+
+  <!-- Step: Passengers -->
+  <div *ngIf="step === 'passengers' && selectedSchedule" class="step-content">
+    <app-passenger-form
+      [schedule]="selectedSchedule"
+      [seats]="selectedSeats"
+      (confirm)="onConfirm($event)"
+      (back)="step = 'seats'"
+    ></app-passenger-form>
+    <div *ngIf="bookingError" class="error-msg">{{ bookingError }}</div>
+  </div>
+
+  <!-- Step: Payment -->
+  <div *ngIf="step === 'payment' && pendingBooking" class="step-content">
+    <app-payment-form
+      #paymentFormRef
+      [pending]="pendingBooking"
+      (pay)="onPay($event)"
+      (back)="step = 'passengers'"
+    ></app-payment-form>
+    <div *ngIf="paymentError" class="error-msg">{{ paymentError }}</div>
+  </div>
+
+  <!-- Step: Confirmation -->
+  <div *ngIf="step === 'confirmation' && confirmation" class="step-content">
+    <app-booking-confirmation
+      [confirmation]="confirmation"
+      (newSearch)="onNewSearch()"
+    ></app-booking-confirmation>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+:host { display: block; }
+
+.state-msg {
+  text-align: center;
+  padding: 40px 16px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &.empty { color: #aaa; font-style: italic; }
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #eee;
+  border-top-color: #e63946;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.results-header {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1.5px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fff;
+
+  &:hover {
+    border-color: #e63946;
+    box-shadow: 0 2px 12px rgba(230, 57, 70, 0.12);
+  }
+
+  &__route {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 170px;
+  }
+
+  &__info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    min-width: 110px;
+  }
+
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+    &__price { flex-direction: row; align-items: center; min-width: unset; }
+  }
+}
+
+.time   { font-size: 1.15rem; font-weight: 700; color: #1a1a2e; }
+.arrow  { color: #ccc; font-size: 1.1rem; }
+.duration { font-size: 0.78rem; color: #999; margin-left: 4px; }
+
+.bus-name { font-size: 0.9rem; color: #555; }
+
+.badge {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  &--cama     { background: #ffecd2; color: #c67c00; }
+  &--semi-cama { background: #e0f2fe; color: #0369a1; }
+  &--standard   { background: #f0fdf4; color: #166534; }
+  &--ejecutivo  { background: #f0fdf4; color: #166534; }
+}
+
+.seats { font-size: 0.8rem; color: #888; }
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #e63946;
+}
+
+.btn-select {
+  padding: 7px 14px;
+  background: #e63946;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover { background: #c62836; }
+}

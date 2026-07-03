@@ -1,0 +1,436 @@
+:host { display: block; }
+
+// ─── Booking summary ────────────────────────────────────────────────────────
+.booking-summary {
+  background: #f8f9ff;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  border: 1.5px solid #e8ecf8;
+}
+.summary-route {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+.arrow { color: #ccc; font-size: 1.1rem; }
+.summary-meta {
+  font-size: 0.82rem;
+  color: #888;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.dot { color: #ccc; }
+.summary-code {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: #aaa;
+
+  strong { color: #555; letter-spacing: 1px; }
+}
+
+// ─── 3‑D Card scene ─────────────────────────────────────────────────────────
+.card-scene {
+  perspective: 1000px;
+  width: 340px;
+  height: 200px;
+  margin: 0 auto 28px;
+
+  @media (max-width: 400px) { width: 100%; height: 185px; }
+}
+
+.card-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.flipped { transform: rotateY(180deg); }
+}
+
+// Shared face styles
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  overflow: hidden;
+
+  // ── Card brand backgrounds ──
+  &.visa        { background: linear-gradient(135deg, #1a1f71 0%, #00A1E4 100%); }
+  &.mastercard  { background: linear-gradient(135deg, #252525 0%, #3d3d3d 100%); }
+  &.amex        { background: linear-gradient(135deg, #007b5e 0%, #00c08b 100%); }
+  &.diners      { background: linear-gradient(135deg, #b06a00 0%, #f5a623 100%); }
+  &.unknown     { background: linear-gradient(135deg, #374151 0%, #6b7280 100%); }
+
+  &--back { transform: rotateY(180deg); }
+}
+
+// ── Decorative circles (common credit card pattern) ──
+.card-face::before,
+.card-face::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+}
+.card-face::before {
+  width: 280px; height: 280px;
+  top: -80px; right: -60px;
+  background: #fff;
+}
+.card-face::after {
+  width: 200px; height: 200px;
+  bottom: -60px; left: -40px;
+  background: #fff;
+}
+
+// ── Chip ──
+.card-chip {
+  position: absolute;
+  top: 28px;
+  left: 24px;
+  width: 44px;
+  height: 34px;
+  background: linear-gradient(135deg, #d4a843 0%, #f5d07a 40%, #c8922a 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chip-lines {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+  padding: 4px;
+  width: 100%;
+  height: 100%;
+
+  span {
+    background: rgba(0,0,0,0.25);
+    border-radius: 1px;
+
+    &:nth-child(2) { grid-column: 2; grid-row: 1 / 3; }
+  }
+}
+
+// ── Network logo (front) ──
+.card-network {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.card-logo--visa { width: 70px; height: auto; }
+
+.mc-logo {
+  display: flex;
+  position: relative;
+  width: 50px;
+  height: 32px;
+
+  &--sm { width: 40px; height: 26px; }
+}
+.mc-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  opacity: 0.9;
+
+  &.mc-red    { left: 0;    background: #EB001B; }
+  &.mc-orange { left: 18px; background: #F79E1B; }
+
+  .mc-logo--sm & { width: 26px; height: 26px; &.mc-orange { left: 14px; } }
+}
+
+.amex-logo {
+  font-family: 'Arial Black', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 2px;
+
+  &--sm { font-size: 0.75rem; }
+}
+
+// ── Card number ──
+.card-number {
+  position: absolute;
+  bottom: 56px;
+  left: 24px;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+
+  @media (max-width: 400px) { font-size: 1rem; letter-spacing: 2px; }
+}
+
+// ── Bottom row (holder + expiry) ──
+.card-bottom {
+  position: absolute;
+  bottom: 18px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-holder,
+.card-expiry {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .label {
+    font-size: 0.55rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .value {
+    font-size: 0.78rem;
+    font-weight: 600;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// ── Back face ──
+.card-stripe {
+  position: absolute;
+  top: 40px;
+  left: 0; right: 0;
+  height: 44px;
+  background: rgba(0,0,0,0.6);
+}
+
+.card-sig-area {
+  position: absolute;
+  top: 104px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.card-sig-line {
+  flex: 1;
+  height: 36px;
+  background: linear-gradient(
+    135deg,
+    #f5f5f5 25%, #fff 25%, #fff 50%,
+    #f5f5f5 50%, #f5f5f5 75%, #fff 75%
+  );
+  background-size: 8px 8px;
+  border-radius: 4px;
+}
+.card-cvv {
+  background: #fff;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0 12px;
+  height: 36px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 3px;
+  min-width: 56px;
+  justify-content: center;
+}
+.card-back-network {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+}
+
+// ─── Form ────────────────────────────────────────────────────────────────────
+.pay-form { }
+
+.pay-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+
+  label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.cvv-hint {
+  font-weight: 400;
+  font-size: 0.7rem;
+  color: #aaa;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.input-icon-wrap {
+  position: relative;
+
+  input { padding-right: 80px; }
+}
+.card-type-badge {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 3px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+
+  &.badge--visa       { background: #1a1f71; color: #fff; }
+  &.badge--mastercard { background: #252525; color: #F79E1B; }
+  &.badge--amex       { background: #007b5e; color: #fff; }
+  &.badge--diners     { background: #b06a00; color: #fff; }
+}
+
+input, select {
+  padding: 10px 13px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fafafa;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: #e63946;
+    box-shadow: 0 0 0 3px rgba(230,57,70,0.1);
+  }
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+  color: #333;
+
+  &:invalid, & option[value=""] { color: #999; }
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+// ─── Footer ──────────────────────────────────────────────────────────────────
+.pay-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.pay-total {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  span  { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.4px; }
+  strong { font-size: 1.4rem; font-weight: 900; color: #1a1a2e; }
+}
+
+.btn-pay {
+  flex: 1;
+  min-width: 180px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s, transform 0.1s;
+  box-shadow: 0 4px 12px rgba(22,163,74,0.3);
+
+  &:hover:not(:disabled) { opacity: 0.92; transform: translateY(-1px); }
+  &:active:not(:disabled) { transform: translateY(0); }
+  &:disabled  { opacity: 0.5; cursor: not-allowed; }
+}
+
+.lock-icon { font-size: 1rem; }
+
+.spinner {
+  width: 18px; height: 18px;
+  border: 2.5px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.security-note {
+  margin-top: 14px;
+  font-size: 0.75rem;
+  color: #aaa;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-back-link {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 0.82rem;
+  cursor: pointer;
+  margin-top: 14px;
+  display: block;
+  width: 100%;
+  text-align: center;
+
+  &:hover:not(:disabled) { color: #e63946; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}

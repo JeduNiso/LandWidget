@@ -1,0 +1,261 @@
+<div class="payment-page">
+
+  <!-- Booking summary -->
+  <div class="booking-summary">
+    <div class="summary-route">
+      <span class="city">{{ pending.origin }}</span>
+      <span class="arrow">→</span>
+      <span class="city">{{ pending.destination }}</span>
+    </div>
+    <div class="summary-meta">
+      <span>{{ formatDate(pending.departure_at) }}</span>
+      <span class="dot">·</span>
+      <span>{{ pending.bus_name }}</span>
+      <span class="dot">·</span>
+      <span>Asientos: {{ pending.seats }}</span>
+    </div>
+    <div class="summary-code">
+      Reserva <strong>{{ pending.booking_code }}</strong>
+    </div>
+  </div>
+
+  <!-- Card preview -->
+  <div class="card-scene">
+    <div class="card-3d" [class.flipped]="cardFlipped">
+
+      <!-- FRONT -->
+      <div class="card-face card-face--front" [ngClass]="cardType">
+        <div class="card-chip">
+          <div class="chip-lines">
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <div class="card-network">
+          <ng-container [ngSwitch]="cardType">
+            <svg *ngSwitchCase="'visa'" viewBox="0 0 80 26" fill="none" xmlns="http://www.w3.org/2000/svg" class="card-logo card-logo--visa">
+              <path d="M30.5 1.5L25.2 24.5H19.3L24.6 1.5H30.5ZM52.2 16.3L55.2 8.1L56.9 16.3H52.2ZM59 24.5H64.4L59.7 1.5H54.7C53.4 1.5 52.3 2.3 51.8 3.5L43.1 24.5H49.2L50.4 21.1H57.9L59 24.5ZM43.5 17.1C43.5 11.2 35.2 10.9 35.2 8.2C35.2 7.4 36 6.5 37.8 6.3C38.7 6.2 41.1 6.1 43.9 7.4L44.9 2.4C43.5 1.9 41.7 1.4 39.5 1.4C33.8 1.4 29.8 4.4 29.8 8.8C29.8 12.1 32.7 13.9 34.9 14.9C37.2 15.9 38 16.6 38 17.6C38 19.1 36.2 19.8 34.5 19.8C31.5 19.9 29.7 19.1 28.3 18.4L27.3 23.5C28.8 24.2 31.5 24.8 34.3 24.8C40.4 24.8 44.2 21.8 43.5 17.1Z" fill="white"/>
+            </svg>
+            <div *ngSwitchCase="'mastercard'" class="mc-logo">
+              <div class="mc-circle mc-red"></div>
+              <div class="mc-circle mc-orange"></div>
+            </div>
+            <div *ngSwitchCase="'amex'" class="amex-logo">AMEX</div>
+            <div *ngSwitchDefault class="card-logo-placeholder"></div>
+          </ng-container>
+        </div>
+
+        <div class="card-number">{{ displayNumber }}</div>
+
+        <div class="card-bottom">
+          <div class="card-holder">
+            <span class="label">Titular</span>
+            <span class="value">{{ displayHolder | uppercase }}</span>
+          </div>
+          <div class="card-expiry">
+            <span class="label">Vence</span>
+            <span class="value">{{ displayExpiry }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BACK -->
+      <div class="card-face card-face--back" [ngClass]="cardType">
+        <div class="card-stripe"></div>
+        <div class="card-sig-area">
+          <div class="card-sig-line"></div>
+          <div class="card-cvv">{{ displayCvv }}</div>
+        </div>
+        <div class="card-back-network">
+          <ng-container [ngSwitch]="cardType">
+            <div *ngSwitchCase="'mastercard'" class="mc-logo mc-logo--sm">
+              <div class="mc-circle mc-red"></div>
+              <div class="mc-circle mc-orange"></div>
+            </div>
+            <div *ngSwitchCase="'amex'" class="amex-logo amex-logo--sm">AMEX</div>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Payment form -->
+  <form (ngSubmit)="onSubmit()" #f="ngForm" class="pay-form" autocomplete="off">
+    <h3 class="pay-title">Datos de pago</h3>
+
+    <!-- Card number -->
+    <div class="field">
+      <label for="cn">Número de tarjeta</label>
+      <div class="input-icon-wrap">
+        <input
+          id="cn"
+          type="text"
+          inputmode="numeric"
+          placeholder="0000 0000 0000 0000"
+          [value]="cardNumber"
+          (input)="onCardNumberInput($event)"
+          (focus)="cardFlipped = false"
+          autocomplete="cc-number"
+          maxlength="23"
+          required
+        />
+        <div class="card-type-badge" [ngClass]="'badge--' + cardType" *ngIf="cardType !== 'unknown'">
+          {{ cardType | uppercase }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Cardholder -->
+    <div class="field">
+      <label for="ch">Nombre del titular</label>
+      <input
+        id="ch"
+        type="text"
+        placeholder="Como aparece en la tarjeta"
+        [(ngModel)]="cardHolder"
+        name="cardHolder"
+        (focus)="cardFlipped = false"
+        autocomplete="cc-name"
+        required
+      />
+    </div>
+
+    <!-- Expiry + CVV -->
+    <div class="field-row">
+      <div class="field">
+        <label for="exp">Vencimiento</label>
+        <input
+          id="exp"
+          type="text"
+          inputmode="numeric"
+          placeholder="MM/AA"
+          [value]="expiryInput"
+          (input)="onExpiryInput($event)"
+          (focus)="cardFlipped = false"
+          autocomplete="cc-exp"
+          maxlength="5"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="cvv">CVV <span class="cvv-hint">{{ isAmex ? '4 dígitos (frente)' : '3 dígitos (dorso)' }}</span></label>
+        <input
+          id="cvv"
+          type="text"
+          inputmode="numeric"
+          [placeholder]="isAmex ? '••••' : '•••'"
+          [value]="cvv"
+          (input)="onCvvInput($event)"
+          (focus)="cardFlipped = !isAmex"
+          (blur)="cardFlipped = false"
+          autocomplete="cc-csc"
+          [attr.maxlength]="isAmex ? 4 : 3"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Billing info -->
+    <h3 class="pay-title" style="margin-top: 10px;">Datos de facturación</h3>
+
+    <!-- Department -->
+    <div class="field">
+      <label for="dept">Departamento</label>
+      <select
+        id="dept"
+        [(ngModel)]="billingDepartment"
+        name="billingDepartment"
+        required
+      >
+        <option value="" disabled>Seleccione un departamento</option>
+        <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+      </select>
+    </div>
+
+    <!-- Address -->
+    <div class="field">
+      <label for="addr">Dirección</label>
+      <input
+        id="addr"
+        type="text"
+        placeholder="Calle, número, zona"
+        [(ngModel)]="billingAddress"
+        name="billingAddress"
+        required
+      />
+    </div>
+
+    <!-- Email + Phone -->
+    <div class="field-row">
+      <div class="field">
+        <label for="email">Correo electrónico</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="correo@ejemplo.com"
+          [(ngModel)]="billingEmail"
+          name="billingEmail"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="phone">Teléfono</label>
+        <input
+          id="phone"
+          type="tel"
+          inputmode="tel"
+          placeholder="Ej: 71234567"
+          [(ngModel)]="billingPhone"
+          name="billingPhone"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Payment type -->
+    <div class="field" style="margin-top: 10px;">
+      <label for="payType">Tipo de pago</label>
+      <select
+        id="payType"
+        [(ngModel)]="paymentType"
+        name="paymentType"
+        required
+      >
+        <option value="otp">OTP</option>
+        <option value="sin_otp">SIN OTP</option>
+      </select>
+    </div>
+
+    <!-- Total & submit -->
+    <div class="pay-footer">
+      <div class="pay-total">
+        <span>Total a cobrar</span>
+        <strong>Bs. {{ pending.total_amount | number:'1.2-2' }}</strong>
+      </div>
+
+      <button type="submit" class="btn-pay" [disabled]="!isValid || processing">
+        <ng-container *ngIf="!processing">
+          <span class="lock-icon">🔒</span>
+          Pagar Bs. {{ pending.total_amount | number:'1.2-2' }}
+        </ng-container>
+        <ng-container *ngIf="processing">
+          <span class="spinner"></span>
+          Procesando pago...
+        </ng-container>
+      </button>
+    </div>
+
+    <div class="security-note">
+      <span>🔐</span>
+      Pago seguro con cifrado SSL de 256 bits. No almacenamos datos de tarjeta.
+    </div>
+  </form>
+
+  <button class="btn-back-link" (click)="back.emit()" [disabled]="processing">
+    ← Volver a datos de pasajeros
+  </button>
+</div>

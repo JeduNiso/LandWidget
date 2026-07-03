@@ -1,0 +1,40 @@
+<div class="confirmation">
+  <div class="check-icon">✓</div>
+  <h2>¡Reserva confirmada!</h2>
+  <p class="subtitle">Recibirás un correo en <strong>{{ confirmation.contact_email }}</strong></p>
+
+  <div class="booking-code">
+    <span class="code-label">Código de reserva</span>
+    <span class="code">{{ confirmation.booking_code }}</span>
+  </div>
+
+  <div class="detail-card">
+    <div class="detail-row">
+      <span class="detail-label">Ruta</span>
+      <span class="detail-value">{{ confirmation.origin }} → {{ confirmation.destination }}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Salida</span>
+      <span class="detail-value">{{ formatDate(confirmation.departure_at) }}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Total pagado</span>
+      <span class="detail-value price">Bs. {{ confirmation.total_amount | number:'1.2-2' }}</span>
+    </div>
+  </div>
+
+  <div class="passengers-section">
+    <h4>Pasajeros</h4>
+    <div class="passenger-row" *ngFor="let p of confirmation.passengers">
+      <div class="passenger-info">
+        <strong>{{ p.first_name }} {{ p.last_name }}</strong>
+        <span>{{ p.document_type }}: {{ p.document_number }}</span>
+      </div>
+      <div class="seat-badge">Asiento {{ p.seat_number }}</div>
+    </div>
+  </div>
+
+  <button class="btn-new-search" (click)="newSearch.emit()">
+    Realizar otra búsqueda
+  </button>
+</div>

@@ -1,0 +1,35 @@
+# ===========================
+# Angular / Node (frontend)
+# ===========================
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.env
+frontend/*.env.local
+
+# ===========================
+# Laravel / PHP (widget)
+# ===========================
+widget/vendor/
+widget/.env
+widget/.env.backup
+widget/storage/framework/cache/data/*
+widget/storage/framework/sessions/*
+widget/storage/framework/views/*
+widget/storage/logs/*
+widget/bootstrap/cache/*.php
+widget/public/hot
+widget/public/storage
+widget/public/mix-manifest.json
+widget/node_modules/
+widget/nul
+
+# ===========================
+# OS / IDE
+# ===========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo

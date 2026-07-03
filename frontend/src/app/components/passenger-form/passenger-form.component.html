@@ -1,0 +1,63 @@
+<div class="passenger-form">
+  <div class="pf-header">
+    <button class="btn-back" (click)="back.emit()">← Volver</button>
+    <h3>Datos de pasajeros</h3>
+  </div>
+
+  <!-- Trip summary -->
+  <div class="trip-summary">
+    <span><strong>{{ schedule.origin_city }}</strong> → <strong>{{ schedule.destination_city }}</strong></span>
+    <span>Asientos: <strong>{{ seatNumbers }}</strong></span>
+    <span class="total-price">Total: <strong>Bs. {{ totalAmount | number:'1.2-2' }}</strong></span>
+  </div>
+
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <!-- Contact info -->
+    <div class="section">
+      <h4 class="section-title">Contacto</h4>
+      <div class="field-row">
+        <div class="field">
+          <label>Nombre completo</label>
+          <input type="text" [(ngModel)]="contactName" name="contactName" placeholder="Juan Pérez" required />
+        </div>
+        <div class="field">
+          <label>Correo electrónico</label>
+          <input type="email" [(ngModel)]="contactEmail" name="contactEmail" placeholder="correo@ejemplo.com" required />
+        </div>
+        <div class="field">
+          <label>Teléfono</label>
+          <input type="tel" [(ngModel)]="contactPhone" name="contactPhone" placeholder="999 888 777" required />
+        </div>
+      </div>
+    </div>
+
+    <!-- Passengers -->
+    <div class="section" *ngFor="let p of passengers; let i = index">
+      <h4 class="section-title">Pasajero {{ i + 1 }} — Asiento {{ p.seat.seat_number }}</h4>
+      <div class="field-row">
+        <div class="field">
+          <label>Nombres</label>
+          <input type="text" [(ngModel)]="p.first_name" [name]="'fn' + i" placeholder="Juan" required />
+        </div>
+        <div class="field">
+          <label>Apellidos</label>
+          <input type="text" [(ngModel)]="p.last_name" [name]="'ln' + i" placeholder="Pérez" required />
+        </div>
+        <div class="field field--sm">
+          <label>Doc.</label>
+          <select [(ngModel)]="p.document_type" [name]="'dt' + i">
+            <option *ngFor="let d of documentTypes" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Número de documento</label>
+          <input type="text" [(ngModel)]="p.document_number" [name]="'dn' + i" placeholder="12345678" required />
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-confirm" [disabled]="!isValid">
+      Confirmar reserva · Bs. {{ totalAmount | number:'1.2-2' }}
+    </button>
+  </form>
+</div>
