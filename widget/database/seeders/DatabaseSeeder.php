@@ -9,8 +9,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        // Desactivar FK para poder truncar en cualquier orden (SQLite)
-        DB::statement('PRAGMA foreign_keys = OFF');
+        $driver = DB::getDriverName();
+
+        if ($driver === 'sqlite') {
+            DB::statement('PRAGMA foreign_keys = OFF');
+        } else {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        }
 
         DB::table('passengers')->truncate();
         DB::table('bookings')->truncate();
@@ -19,7 +24,11 @@ class DatabaseSeeder extends Seeder
         DB::table('bus_routes')->truncate();
         DB::table('cities')->truncate();
 
-        DB::statement('PRAGMA foreign_keys = ON');
+        if ($driver === 'sqlite') {
+            DB::statement('PRAGMA foreign_keys = ON');
+        } else {
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        }
 
         $this->call([
             BusSeeder::class,     // ciudades, rutas, horarios, asientos
