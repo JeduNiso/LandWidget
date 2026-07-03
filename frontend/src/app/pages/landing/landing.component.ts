@@ -46,12 +46,12 @@ interface Service {
             </button>
           </div>
 
-          <!-- ALQUILER DE AUTOS -->
+          <!-- BOLETOS DE AVIÓN -->
           <div class="card card--soon">
             <div class="card-badge card-badge--soon">PRÓXIMAMENTE</div>
-            <div class="card-icon">🚗</div>
-            <h3 class="card-title">Alquiler de autos</h3>
-            <p class="card-desc">Rentá un vehículo en tu ciudad destino con las mejores tarifas garantizadas.</p>
+            <div class="card-icon">✈️</div>
+            <h3 class="card-title">Boletos de avión</h3>
+            <p class="card-desc">Encontrá los mejores precios en vuelos nacionales e internacionales desde Bolivia.</p>
             <button class="btn btn--ghost" disabled>Ver más</button>
           </div>
 
@@ -78,7 +78,7 @@ interface Service {
 
       <!-- FOOTER -->
       <footer class="footer">
-        <p>© 2026 viajero.bo — Bolivia</p>
+        <p>© 2026 Sentinel — Bolivia</p>
       </footer>
 
     </div>
