@@ -1,0 +1,5 @@
+{
+    "build": {
+        "phpExtensions": ["pdo_mysql", "mbstring", "openssl", "tokenizer", "xml", "bcmath"]
+    }
+}
