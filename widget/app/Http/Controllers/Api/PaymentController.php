@@ -375,7 +375,7 @@ class PaymentController extends Controller
             . '<p>Gracias por su compra. Conserve este comprobante como respaldo de su transacción.</p>'
             . '<button class="print-btn" onclick="window.print()">Imprimir Comprobante</button>'
             . '&nbsp;'
-            . '<a class="print-btn" href="' . e(env('FRONTEND_URL', 'https://viajeros.up.railway.app')) . '" style="background:#555;">Volver al Inicio</a>'
+            . '<a class="print-btn" href="' . e(env('FRONTEND_URL', 'https://viajerosbo.up.railway.app')) . '" style="background:#555;">Volver al Inicio</a>'
             . '</div>'
             . '</div>'
             . '</body></html>';
