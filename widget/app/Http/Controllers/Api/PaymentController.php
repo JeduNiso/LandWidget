@@ -17,7 +17,16 @@ class PaymentController extends Controller
         $org_id = '1snn5n9w';
         // este es el contexto de la pagina definida en /redirect/templates/fp/{{template}}.html, se pasa el context al template
         // real sequnum con el id correcto
-        $pdo = new \PDO('mysql:host=127.0.0.1;port=3306;dbname=paymentgw;charset=utf8mb4', 'root', '');
+        $pdo = new \PDO(
+            sprintf(
+                'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
+                env('PAYMENTGW_DB_HOST', env('MYSQLHOST', '127.0.0.1')),
+                env('PAYMENTGW_DB_PORT', env('MYSQLPORT', '3306')),
+                env('PAYMENTGW_DB_DATABASE', 'paymentgw')
+            ),
+            env('PAYMENTGW_DB_USERNAME', env('MYSQLUSER', 'root')),
+            env('PAYMENTGW_DB_PASSWORD', env('MYSQLPASSWORD', ''))
+        );
         $stmt = $pdo->query('SELECT seqNumber FROM `seguence` ORDER BY seqNumber DESC LIMIT 1');
         $seqnum = $stmt ? $stmt->fetchColumn() : null;
         logger()->info('Fetched seqNumber from DB', ['seqNum' => $seqnum]);
@@ -115,7 +124,16 @@ class PaymentController extends Controller
     public function enrollment_callback(string $code, Request $request): JsonResponse|Response
     {
         try {
-            $pdo = new \PDO('mysql:host=127.0.0.1;port=3306;dbname=paymentgw;charset=utf8mb4', 'root', '');
+            $pdo = new \PDO(
+                sprintf(
+                    'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
+                    env('PAYMENTGW_DB_HOST', env('MYSQLHOST', '127.0.0.1')),
+                    env('PAYMENTGW_DB_PORT', env('MYSQLPORT', '3306')),
+                    env('PAYMENTGW_DB_DATABASE', 'paymentgw')
+                ),
+                env('PAYMENTGW_DB_USERNAME', env('MYSQLUSER', 'root')),
+                env('PAYMENTGW_DB_PASSWORD', env('MYSQLPASSWORD', ''))
+            );
             $pdo->exec('UPDATE seguence SET seqNumber = seqNumber + 1 ORDER BY seqNumber DESC LIMIT 1');
         } catch (Throwable $e) {
             logger()->error('No se pudo actualizar seqNumber', ['error' => $e->getMessage()]);
