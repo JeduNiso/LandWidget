@@ -274,7 +274,7 @@ class PaymentNoOtpController extends Controller
             . '<p>Gracias por su compra. Conserve este comprobante como respaldo de su transacción.</p>'
             . '<button class="print-btn" onclick="window.print()">Imprimir Comprobante</button>'
             . '&nbsp;'
-            . '<a class="print-btn" href="' . e(env('FRONTEND_URL', 'http://localhost:4200')) . '" style="background:#555;">Volver al Inicio</a>'
+            . '<a class="print-btn" href="' . e(env('FRONTEND_URL', 'https://viajeros.up.railway.app')) . '" style="background:#555;">Volver al Inicio</a>'
             . '</div>'
             . '</div>'
             . '</body></html>';
@@ -299,7 +299,7 @@ class PaymentNoOtpController extends Controller
             . '<div class="reason"><strong>Razón:</strong> ' . e($reason) . '</div>'
             . '<div class="code-label">Código: ' . e($errorCode) . '</div>'
             . '<br>'
-            . '<a href="' . e(env('FRONTEND_URL', 'http://localhost:4200')) . '" style="display:inline-block;margin-top:10px;padding:10px 25px;background:#555;color:#fff;border-radius:6px;text-decoration:none;font-size:14px;">Volver al Inicio</a>'
+            . '<a href="' . e(env('FRONTEND_URL', 'https://viajeros.up.railway.app')) . '" style="display:inline-block;margin-top:10px;padding:10px 25px;background:#555;color:#fff;border-radius:6px;text-decoration:none;font-size:14px;">Volver al Inicio</a>'
             . '</div></body></html>';
     }
 
