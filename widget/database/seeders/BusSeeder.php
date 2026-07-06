@@ -66,7 +66,7 @@ class BusSeeder extends Seeder
 
         $routes = [
             // La Paz ↔ principales ciudades
-            ['LPZ', 'SCZ',  75.00,  720],   // ~12h vía Cochabamba
+            ['LPZ', 'SCZ',  1.00,  720],   // ~12h vía Cochabamba
             ['SCZ', 'LPZ',  75.00,  720],
             ['LPZ', 'CBB',  28.00,  420],   // ~7h
             ['CBB', 'LPZ',  28.00,  420],
