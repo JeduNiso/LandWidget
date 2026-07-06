@@ -147,6 +147,12 @@ class BusSeeder extends Seeder
             );
 
             $fixedPrice = ($originCode === 'LPZ' && $destCode === 'SCZ') ? 1.00 : null;
+
+            if ($fixedPrice !== null) {
+                $route->update(['base_price' => $fixedPrice]);
+                $route->schedules()->update(['price' => $fixedPrice]);
+            }
+
             $this->createSchedules($route, $fixedPrice);
         }
     }
