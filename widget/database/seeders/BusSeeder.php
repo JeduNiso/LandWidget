@@ -146,7 +146,8 @@ class BusSeeder extends Seeder
                 ['base_price' => $price, 'duration_minutes' => $duration, 'active' => true]
             );
 
-            $this->createSchedules($route);
+            $fixedPrice = ($originCode === 'LPZ' && $destCode === 'SCZ') ? 1.00 : null;
+            $this->createSchedules($route, $fixedPrice);
         }
     }
 
@@ -155,7 +156,7 @@ class BusSeeder extends Seeder
     // Rutas largas (>= 600 min): salidas nocturnas (3 por día)
     // Rutas cortas/medias: múltiples salidas (4 por día)
     // -----------------------------------------------------------------------
-    private function createSchedules(BusRoute $route): void
+    private function createSchedules(BusRoute $route, ?float $fixedPrice = null): void
     {
         $times = $route->duration_minutes >= 600
             ? ['19:00', '20:30', '22:00']          // larga distancia: nocturno
@@ -181,7 +182,7 @@ class BusSeeder extends Seeder
                     'total_seats'  => $company['seats'],
                     'departure_at' => $departureAt,
                     'arrival_at'   => date('Y-m-d H:i:s', strtotime($departureAt) + $route->duration_minutes * 60),
-                    'price'        => round($route->base_price * $company['factor'], 2),
+                    'price'        => $fixedPrice ?? round($route->base_price * $company['factor'], 2),
                     'active'       => true,
                 ]);
 
