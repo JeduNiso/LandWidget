@@ -609,8 +609,10 @@ class PaymentController extends Controller
         $jsonString = $this->json_dumps($jsonString);
         logger()->info('JSON INPUT FOR AUTHENTICATION SETUP');
         logger()->info($jsonString);
-        $keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
-        $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';
+        /*$keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
+        $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';*/
+        $keyc = 'jSmwKLXHzG4ZKWsNGXTkWV3B5OwlGvqOcyYHPykWlPw=';
+        $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
         $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/risk/v1/authentication-setups', 'redenlace_000014');
@@ -623,7 +625,7 @@ class PaymentController extends Controller
         logger()->info('DATE TRANSACTION');
         logger()->info($date_transaction);
         $headersReq = [
-            'Host' => 'apitest.cybersource.com',
+            'Host' => 'api.cybersource.com',
             'Date' => $date_transaction,
             'Digest' => 'SHA-256=' . $blue_print,
             'v-c-merchant-id' => 'redenlace_000014',
@@ -634,7 +636,7 @@ class PaymentController extends Controller
         logger()->info('HEADERS REQ', $headersReq);
         $res = Http::withHeaders($headersReq)
             ->withBody($jsonString, 'application/json')
-            ->post('https://apitest.cybersource.com/risk/v1/authentication-setups');
+            ->post('https://api.cybersource.com/risk/v1/authentication-setups');
         $data = $res->body();
         logger()->info('RESPONSE STATUS');
         logger()->info($data);
@@ -693,8 +695,8 @@ class PaymentController extends Controller
         $jsonString = $this->json_dumps($jsonString);
         logger()->info('JSON INPUT FOR ENROLLMENT SETUP');
         logger()->info($jsonString);
-        $keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
-        $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';
+        $keyc = 'jSmwKLXHzG4ZKWsNGXTkWV3B5OwlGvqOcyYHPykWlPw=';
+        $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
         $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/risk/v1/authentications', 'redenlace_000014');
@@ -707,7 +709,7 @@ class PaymentController extends Controller
         logger()->info('DATE TRANSACTION');
         logger()->info($date_transaction);
         $headersReq = [
-            'Host' => 'apitest.cybersource.com',
+            'Host' => 'api.cybersource.com',
             'Date' => $date_transaction,
             'Digest' => 'SHA-256=' . $blue_print,
             'v-c-merchant-id' => 'redenlace_000014',
@@ -718,7 +720,7 @@ class PaymentController extends Controller
         logger()->info('HEADERS REQ', $headersReq);
         $res = Http::withHeaders($headersReq)
             ->withBody($jsonString, 'application/json')
-            ->post('https://apitest.cybersource.com/risk/v1/authentications');
+            ->post('https://api.cybersource.com/risk/v1/authentications');
         logger()->info('RES');
         logger()->info('RES STATUS', ['status' => $res->status()]);
         $data = $res->body();
@@ -769,8 +771,10 @@ class PaymentController extends Controller
         $jsonString = $this->json_dumps($jsonString);
         logger()->info('JSON INPUT FOR VALID_AUTH');
         logger()->info($jsonString);
-        $keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
-        $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';
+         /*$keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
+        $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';*/
+        $keyc = 'jSmwKLXHzG4ZKWsNGXTkWV3B5OwlGvqOcyYHPykWlPw=';
+        $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
         $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/risk/v1/authentication-results', 'redenlace_000014');
@@ -781,7 +785,7 @@ class PaymentController extends Controller
         logger()->info('VALID_AUTH SIGNATURE');
         logger()->info($signature);
         $headersReq = [
-            'Host' => 'apitest.cybersource.com',
+            'Host' => 'api.cybersource.com',
             'Date' => $date_transaction,
             'Digest' => 'SHA-256=' . $blue_print,
             'v-c-merchant-id' => 'redenlace_000014',
@@ -791,7 +795,7 @@ class PaymentController extends Controller
         ];
         $res = Http::withHeaders($headersReq)
             ->withBody($jsonString, 'application/json')
-            ->post('https://apitest.cybersource.com/risk/v1/authentication-results');
+            ->post('https://api.cybersource.com/risk/v1/authentication-results');
         logger()->info('VALID_AUTH RES STATUS', ['status' => $res->status()]);
         $data = $res->body();
         logger()->info('VALID_AUTH RESPONSE', ['body' => $data]);
@@ -873,8 +877,10 @@ class PaymentController extends Controller
         $jsonString = $this->json_dumps($jsonString);
         logger()->info('JSON INPUT FOR PAYMENT WITH 3DS');
         logger()->info($jsonString);
-        $keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
-        $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';
+         /*$keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
+        $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';*/
+        $keyc = 'jSmwKLXHzG4ZKWsNGXTkWV3B5OwlGvqOcyYHPykWlPw=';
+        $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
         $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/pts/v2/payments/', 'redenlace_000014');
@@ -883,7 +889,8 @@ class PaymentController extends Controller
         logger()->info('PAYMENT_3DS BLUE PRINT', ['blueprint' => $blue_print]);
         logger()->info('PAYMENT_3DS SIGNATURE', ['signature' => $signature]);
         $headersReq = [
-            'Host' => 'apitest.cybersource.com',
+            //'Host' => 'apitest.cybersource.com',
+            'Host' => 'api.cybersource.com',
             'Date' => $date_transaction,
             'Digest' => 'SHA-256=' . $blue_print,
             'v-c-merchant-id' => 'redenlace_000014',
@@ -893,7 +900,7 @@ class PaymentController extends Controller
         ];
         $res = Http::withHeaders($headersReq)
             ->withBody($jsonString, 'application/json')
-            ->post('https://apitest.cybersource.com/pts/v2/payments/');
+            ->post('https://api.cybersource.com/pts/v2/payments/');
         logger()->info('PAYMENT_3DS RES STATUS', ['status' => $res->status()]);
         $data = $res->body();
         logger()->info('PAYMENT_3DS RESPONSE', ['body' => $data]);
@@ -968,15 +975,15 @@ class PaymentController extends Controller
     private function sendCybersourceRequest(string $url, array $payload): array
     {
         $jsonString = $this->json_dumps($payload);
-        $keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
-        $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';
+        /*$keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
+        $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';*/
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
         $headers_string = $this->get_headers_string($date_transaction, $blue_print, $url, 'redenlace_000014');
         $signature_hash = $this->get_signature_hash($headers_string, $keyc);
         $signature = $this->get_signature($signature_hash, $clave);
         $headersReq = [
-            'Host' => 'apitest.cybersource.com',
+            'Host' => 'api.cybersource.com',
             'Date' => $date_transaction,
             'Digest' => 'SHA-256=' . $blue_print,
             'v-c-merchant-id' => 'redenlace_000014',
@@ -986,7 +993,7 @@ class PaymentController extends Controller
         ];
         $res = Http::withHeaders($headersReq)
             ->withBody($jsonString, 'application/json')
-            ->post('https://apitest.cybersource.com' . $url);
+            ->post('https://api.cybersource.com' . $url);
         $body = json_decode($res->body(), true);
 
         return [
