@@ -20,7 +20,7 @@ class PaymentController extends Controller
         // real sequnum con el id correcto
         $seqnum = DB::table('seguence')->orderByDesc('seqNumber')->value('seqNumber');
         logger()->info('Fetched seqNumber from DB', ['seqNum' => $seqnum]);
-        $realseq = 'redenlace_000014' . strval($seqnum);
+        $realseq = 'redenlace_400037' . strval($seqnum);
         $context = [
             'seqNum' => $realseq,
             'id' => $org_id,
@@ -615,7 +615,7 @@ class PaymentController extends Controller
         $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
-        $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/risk/v1/authentication-setups', 'redenlace_000014');
+        $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/risk/v1/authentication-setups', 'redenlace_400037');
         $signature_hash = $this->get_signature_hash($headers_string, $keyc);
         $signature = $this->get_signature($signature_hash, $clave);
         logger()->info('BLUE PRINT');
@@ -628,7 +628,7 @@ class PaymentController extends Controller
             'Host' => 'api.cybersource.com',
             'Date' => $date_transaction,
             'Digest' => 'SHA-256=' . $blue_print,
-            'v-c-merchant-id' => 'redenlace_000014',
+            'v-c-merchant-id' => 'redenlace_400037',
             'Signature' => $signature,
             'Content-Type' => 'application/json',
             'Accept' => 'application/hal+json;charset=utf-8',
@@ -699,7 +699,7 @@ class PaymentController extends Controller
         $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
-        $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/risk/v1/authentications', 'redenlace_000014');
+        $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/risk/v1/authentications', 'redenlace_400037');
         $signature_hash = $this->get_signature_hash($headers_string, $keyc);
         $signature = $this->get_signature($signature_hash, $clave);
         logger()->info('BLUE PRINT');
@@ -712,7 +712,7 @@ class PaymentController extends Controller
             'Host' => 'api.cybersource.com',
             'Date' => $date_transaction,
             'Digest' => 'SHA-256=' . $blue_print,
-            'v-c-merchant-id' => 'redenlace_000014',
+            'v-c-merchant-id' => 'redenlace_400037',
             'Signature' => $signature,
             'Content-Type' => 'application/json',
             'Accept' => 'application/hal+json;charset=utf-8',
@@ -777,7 +777,7 @@ class PaymentController extends Controller
         $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
-        $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/risk/v1/authentication-results', 'redenlace_000014');
+        $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/risk/v1/authentication-results', 'redenlace_400037');
         $signature_hash = $this->get_signature_hash($headers_string, $keyc);
         $signature = $this->get_signature($signature_hash, $clave);
         logger()->info('VALID_AUTH BLUE PRINT');
@@ -788,7 +788,7 @@ class PaymentController extends Controller
             'Host' => 'api.cybersource.com',
             'Date' => $date_transaction,
             'Digest' => 'SHA-256=' . $blue_print,
-            'v-c-merchant-id' => 'redenlace_000014',
+            'v-c-merchant-id' => 'redenlace_400037',
             'Signature' => $signature,
             'Content-Type' => 'application/json',
             'Accept' => 'application/hal+json;charset=utf-8',
@@ -811,7 +811,7 @@ class PaymentController extends Controller
         $consumerAuth = $authData['consumerAuthenticationInformation'] ?? [];
         $commerceIndicator = ($type === '3DS')? $consumerAuth['indicator'] : $consumerAuth['ecommerceIndicator'];
         $context = is_array($context) ? $context : ($paymentData['context'] ?? []);
-        $realSeq = explode('redenlace_000014', trim($context['seqNum']))[1] ?? '';
+        $realSeq = explode('redenlace_400037', trim($context['seqNum']))[1] ?? '';
         logger()->info('PAYMENT WITH 3DS CONTEXT', ['realSeq' => $realSeq]);
         $firstPassenger = $booking->passengers->first();
         $destination = $booking->schedule->busRoute->destinationCity->name ?? '';
@@ -863,7 +863,7 @@ class PaymentController extends Controller
                 ["key" => "61", "value" => "BOLIVIA"]
             ],
             'deviceInformation' => [
-                'fingerprintSessionId' => $realSeq !== '' ? $realSeq : 'redenlace_000014',
+                'fingerprintSessionId' => $realSeq !== '' ? $realSeq : 'redenlace_400037',
             ],
             'consumerAuthenticationInformation' => [
                 'cavv' => $consumerAuth['cavv'] ?? '',
@@ -883,7 +883,7 @@ class PaymentController extends Controller
         $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
-        $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/pts/v2/payments/', 'redenlace_000014');
+        $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/pts/v2/payments/', 'redenlace_400037');
         $signature_hash = $this->get_signature_hash($headers_string, $keyc);
         $signature = $this->get_signature($signature_hash, $clave);
         logger()->info('PAYMENT_3DS BLUE PRINT', ['blueprint' => $blue_print]);
@@ -893,7 +893,7 @@ class PaymentController extends Controller
             'Host' => 'api.cybersource.com',
             'Date' => $date_transaction,
             'Digest' => 'SHA-256=' . $blue_print,
-            'v-c-merchant-id' => 'redenlace_000014',
+            'v-c-merchant-id' => 'redenlace_400037',
             'Signature' => $signature,
             'Content-Type' => 'application/json',
             'Accept' => 'application/hal+json;charset=utf-8',
@@ -979,14 +979,14 @@ class PaymentController extends Controller
         $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';*/
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
-        $headers_string = $this->get_headers_string($date_transaction, $blue_print, $url, 'redenlace_000014');
+        $headers_string = $this->get_headers_string($date_transaction, $blue_print, $url, 'redenlace_400037');
         $signature_hash = $this->get_signature_hash($headers_string, $keyc);
         $signature = $this->get_signature($signature_hash, $clave);
         $headersReq = [
             'Host' => 'api.cybersource.com',
             'Date' => $date_transaction,
             'Digest' => 'SHA-256=' . $blue_print,
-            'v-c-merchant-id' => 'redenlace_000014',
+            'v-c-merchant-id' => 'redenlace_400037',
             'Signature' => $signature,
             'Content-Type' => 'application/json',
             'Accept' => 'application/hal+json;charset=utf-8',
