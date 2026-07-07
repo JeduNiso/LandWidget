@@ -539,7 +539,7 @@ class PaymentController extends Controller
         $headers .= '(request-target): post ' . $url . "\n";
         $headers .= 'digest: SHA-256=' . $blue_print . "\n";
         $headers .= 'v-c-merchant-id: ' . $merchant;
-        logger()->info('HEADERS STRING');
+        logger()->info('HEADERS STRING1');
         logger()->info($headers);
 
         return $headers;
