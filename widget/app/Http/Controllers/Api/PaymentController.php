@@ -534,7 +534,7 @@ class PaymentController extends Controller
 
     private function get_headers_string(string $date_transaction, string $blue_print, string $url, string $merchant): string
     {
-        $headers = "host: apitest.cybersource.com\n";
+        $headers = "host: api.cybersource.com\n";
         $headers .= 'date: ' . $date_transaction . "\n";
         $headers .= '(request-target): post ' . $url . "\n";
         $headers .= 'digest: SHA-256=' . $blue_print . "\n";
@@ -879,8 +879,8 @@ class PaymentController extends Controller
         logger()->info($jsonString);
          /*$keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
         $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';*/
-        $keyc = 'jSmwKLXHzG4ZKWsNGXTkWV3B5OwlGvqOcyYHPykWlPw=';
-        $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
+        $keyc = '051LBXELu89AoUxGpvv5u2hUVVTrTWKgwVmgel6sQrI=';
+        $clave = '3bf3f7f9-8d0a-4a3e-bf2a-1f1858e04b31';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
         $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/pts/v2/payments/', 'redenlace_400037');
@@ -977,6 +977,8 @@ class PaymentController extends Controller
         $jsonString = $this->json_dumps($payload);
         /*$keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
         $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';*/
+        $keyc = '051LBXELu89AoUxGpvv5u2hUVVTrTWKgwVmgel6sQrI=';
+        $clave = '3bf3f7f9-8d0a-4a3e-bf2a-1f1858e04b31';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
         $headers_string = $this->get_headers_string($date_transaction, $blue_print, $url, 'redenlace_400037');
