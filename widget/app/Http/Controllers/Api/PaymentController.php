@@ -611,8 +611,8 @@ class PaymentController extends Controller
         logger()->info($jsonString);
         /*$keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
         $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';*/
-        $keyc = 'jSmwKLXHzG4ZKWsNGXTkWV3B5OwlGvqOcyYHPykWlPw=';
-        $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
+        $keyc = trim('051LBXELu89AoUxGpvv5u2hUVVTrTWKgwVmgel6sQrI=');
+        $clave = trim('3bf3f7f9-8d0a-4a3e-bf2a-1f1858e04b31');
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
         $headers_string = $this->get_headers_string($date_transaction, $blue_print, '/risk/v1/authentication-setups', 'redenlace_400037');
@@ -695,7 +695,7 @@ class PaymentController extends Controller
         $jsonString = $this->json_dumps($jsonString);
         logger()->info('JSON INPUT FOR ENROLLMENT SETUP');
         logger()->info($jsonString);
-        $keyc = 'jSmwKLXHzG4ZKWsNGXTkWV3B5OwlGvqOcyYHPykWlPw=';
+        $keyc = '051LBXELu89AoUxGpvv5u2hUVVTrTWKgwVmgel6sQrI=';
         $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
@@ -773,7 +773,7 @@ class PaymentController extends Controller
         logger()->info($jsonString);
          /*$keyc = 'RhX6x8VUrji8D7JpuKyxF3wqbSJmfrcV3VK0Z/euxrs=';
         $clave = '49e40d24-9068-4d71-8ca9-18054e76d737';*/
-        $keyc = 'jSmwKLXHzG4ZKWsNGXTkWV3B5OwlGvqOcyYHPykWlPw=';
+        $keyc = '051LBXELu89AoUxGpvv5u2hUVVTrTWKgwVmgel6sQrI=';
         $clave = 'c3c5e4d2-d892-49e4-bbf8-107a558ea163';
         $date_transaction = $this->get_date();
         $blue_print = $this->get_blueprint($jsonString);
